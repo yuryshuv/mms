@@ -8,4 +8,5 @@
 
 uploads/*
 target/*
-src/main/static/*
+src/main/resources/static/*
+*.properties

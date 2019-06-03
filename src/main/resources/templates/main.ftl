@@ -28,7 +28,13 @@
                                 <label for="moduleNameInput">Название объекта</label>
                             </div>
                             <div class="md-form">
-                                <input type="text" class="form-control" id="moduleDescriptionInput" name="moduleDescription" >
+                                <input type="text" class="form-control ${(moduleDescriptionError??)?string('is-invalid','')}"
+                                       value="<#if module??>${module.moduleDescription}</#if>" id="moduleDescriptionInput" name="moduleDescription" >
+                                <#if moduleDescriptionError??>
+                                    <div class="invalid-feedback">
+                                        ${moduleDescriptionError}
+                                    </div>
+                                </#if>
                                 <label for="moduleDescriptionInput">Описание объекта</label>
                             </div>
                             <input type="hidden" name="_csrf" value="${_csrf.token}" />

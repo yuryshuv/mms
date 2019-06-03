@@ -15,6 +15,8 @@ public class Module {
     @NotBlank(message = "Поле не может быть пустым")
     @Length(max = 255, message = "Слишком длинное название (более, чем 255 символов)")
     private String moduleName;
+
+    @Length(max = 255, message = "Слишком длинное описание (более, чем 255 символов)")
     private String moduleDescription;
 
     @ManyToOne(fetch = FetchType.EAGER)
