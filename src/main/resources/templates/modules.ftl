@@ -17,15 +17,27 @@
                     Добавить новый узел
                 </a>
 
-                <div class="collapse" id="collapseExample">
+                <div class="collapse <#if unit??>show</#if>" id="collapseExample">
                     <div class="mt-3">
-                        <form method="post" enctype="multipart/form-data">
+                        <form method="post" class="needs-validation" enctype="multipart/form-data">
                             <div class="md-form">
-                                <input type="text" class="form-control" name="unitName" id="unitNameInput">
+                                <input type="text" class="form-control ${(unitNameError??)?string('is-invalid','')}"
+                                       value="<#if unit??>${unit.unitName}</#if>" name="unitName" id="unitNameInput">
+                                <#if unitNameError??>
+                                    <div class="invalid-feedback">
+                                        ${unitNameError}
+                                    </div>
+                                </#if>
                                 <label for="unitNameInput">Название узла</label>
                             </div>
                             <div class="md-form">
-                                <input type="text" class="form-control" name="unitDescription" id="unitDescriptionInput">
+                                <input type="text" class="form-control ${(unitDescriptionError??)?string('is-invalid','')}"
+                                       value="<#if unit??>${unit.unitDescription}</#if>" name="unitDescription" id="unitDescriptionInput">
+                                <#if unitDescriptionError??>
+                                    <div class="invalid-feedback">
+                                        ${unitDescriptionError}
+                                    </div>
+                                </#if>
                                 <label for="unitDescriptionInput">Описание узла</label>
                             </div>
                             <input type="hidden" name="_csrf" value="${_csrf.token}" />

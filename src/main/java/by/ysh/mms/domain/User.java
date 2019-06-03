@@ -19,12 +19,10 @@ public class User implements UserDetails {
     private Long id;
 
     @NotBlank(message = "Введите имя пользователя")
-    @Length(min = 3, message = "Слишком короткое имя (менее, чем 3 символа)")
     @Length(max = 12, message = "Слишком длинное имя (более, чем 12 символов)")
     private String username;
     @NotBlank(message = "Введите пароль")
-    @Length(min = 3, message = "Слишком простой пароль (менее, чем 3 символа)")
-    @Length(max = 255, message = "Слишком длинный пароль (более, чем 255 символов)")
+    @Length(max = 50, message = "Слишком длинный пароль (более, чем 50 символов)")
     private String password;
     private boolean active = false;
 

@@ -16,7 +16,7 @@
 
                 <div class="collapse <#if module??>show</#if>" id="collapseExample" >
                     <div class="form-group mt-3">
-                        <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                        <form class="needs-validation" method="post" enctype="multipart/form-data">
                             <div class="md-form">
                                 <input type="text" class="form-control ${(moduleNameError??)?string('is-invalid','')}"
                                        value="<#if module??>${module.moduleName}</#if>" id="moduleNameInput" name="moduleName">

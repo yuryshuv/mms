@@ -16,10 +16,11 @@
                             <div class="invalid-feedback">
                                 ${usernameError}
                             </div>
-                            <#else>
-                                <div class="invalid-feedback">
-                                    Неверное имя пользователя или пароль
-                                </div>
+                        </#if>
+                        <#if isBadCredentials>
+                            <div class="invalid-feedback">
+                                Неверное имя пользователя или пароль
+                            </div>
                         </#if>
                         <label for="Form-username">Имя пользователя</label>
                     </div>

@@ -8,7 +8,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,8 +18,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -65,8 +62,8 @@ public class MainController {
             @RequestParam String partDescription,
             @RequestParam (required = false, defaultValue = "") String unitName,
             Model model) {
-        Part part = new Part(partName, partDescription, user, unitRepo.findByUnitName(unitName));
-        partRepo.save(part);
+//        Part part = new Part(partName, partDescription, user, unitRepo.findByUnitName(unitName));
+//        partRepo.save(part);
         Iterable<Part> parts = partRepo.findAll();
         Iterable<Module> modules = moduleRepo.findAll();
         model.addAttribute("parts", parts);
@@ -87,46 +84,24 @@ public class MainController {
             @Valid Module module,
             BindingResult bindingResult,
             Model model) {
-        module.setAuthor(user);
         if (bindingResult.hasErrors()){
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("module", module);
         } else {
-            moduleRepo.save(module);
+            Module moduleFromDb = moduleRepo.findByModuleName(module.getModuleName());
+            if (moduleFromDb != null){
+                model.addAttribute("module", module);
+                model.addAttribute("moduleNameError", "Модуль с таким именем уже существует");
+            } else {
+                module.setAuthor(user);
+                model.addAttribute("module", null);
+                moduleRepo.save(module);
+            }
         }
         Iterable<Module> modules = moduleRepo.findAll();
-        model.addAttribute("module", null);
         model.addAttribute("modules", modules);
         return "main";
-    }
-
-    @GetMapping ("/modules/{module}")
-    public String units(
-            @PathVariable Module module,
-            Model model
-
-    ){
-        Set<Unit> units = module.getUnits();
-        model.addAttribute("module", module);
-        model.addAttribute("units", units);
-        return "modules";
-    }
-
-
-    @PostMapping ("/modules/{module}")
-    public String addUnit(
-            @AuthenticationPrincipal User user,
-            @PathVariable Module module,
-            @RequestParam String unitName,
-            @RequestParam String unitDescription,
-            Model model)
-    {
-        Unit unit = new Unit(unitName, unitDescription, user, module);
-        unitRepo.save(unit);
-        Iterable<Unit> units = unitRepo.findByModuleModuleId(module.getModuleId());
-        model.addAttribute("units", units);
-        return "modules";
     }
 
     @GetMapping("/units/{unit}")
