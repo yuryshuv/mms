@@ -1,5 +1,9 @@
 <#import "parts/common.ftl" as c>
 <#import "parts/login.ftl" as l>
 <@c.page>
-    <@l.login "/login" false/>
+    <#if Session?? && Session.SPRING_SECURITY_LAST_EXCEPTION??>
+        <@l.login "/login" false true />
+    <#else>
+        <@l.login "/login" false false />
+    </#if>
 </@c.page>

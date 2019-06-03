@@ -1,4 +1,4 @@
-<#macro login path isRegisterForm>
+<#macro login path isRegisterForm isBadCredentials>
     <section class="form-simple mt-3">
         <div class="card card-block" style="width: 40rem; left: 50%; margin-left: -320px;">
             <div class="header pt-3 blue-gradient">
@@ -11,11 +11,15 @@
                     <div class="md-form">
                         <input type="text" name="username" id="Form-username"
                                value="<#if user??>${user.username}</#if>"
-                               class="form-control ${(usernameError??)?string('is-invalid','')}">
+                               class="form-control ${(usernameError?? || isBadCredentials)?string('is-invalid','')}">
                         <#if usernameError??>
                             <div class="invalid-feedback">
                                 ${usernameError}
                             </div>
+                            <#else>
+                                <div class="invalid-feedback">
+                                    Неверное имя пользователя или пароль
+                                </div>
                         </#if>
                         <label for="Form-username">Имя пользователя</label>
                     </div>
