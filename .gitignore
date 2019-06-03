@@ -7,3 +7,5 @@
 *.ear
 
 uploads/*
+target/*
+src/main/static/*
