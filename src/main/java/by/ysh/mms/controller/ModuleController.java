@@ -22,7 +22,7 @@ import java.util.Set;
 public class ModuleController {
 
     @Autowired
-    UnitRepo unitRepo;
+    private UnitRepo unitRepo;
 
     @GetMapping("/modules/{module}")
     public String units(

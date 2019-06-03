@@ -1,13 +1,19 @@
 package by.ysh.mms.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Part {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long partId;
+    @NotBlank(message = "Поле не может быть пустым")
+    @Length(max = 255, message = "Слишком длинное название (более, чем 255 символов)")
     private String partName;
+    @Length(max = 255, message = "Слишком длинное описание (более, чем 255 символов)")
     private String partDescription;
 
     @ManyToOne(fetch = FetchType.EAGER)

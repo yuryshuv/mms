@@ -21,8 +21,6 @@ import java.util.Set;
 
 @Controller
 public class MainController {
-    @Autowired
-    private UnitRepo unitRepo;
 
     @Autowired
     private PartRepo partRepo;
@@ -44,31 +42,6 @@ public class MainController {
     @GetMapping("/")
     public String greeting(Map<String, Object> model){
         return "greeting";
-    }
-
-    @GetMapping("/parts")
-    public String parts(Model model) {
-        Iterable<Module> modules = moduleRepo.findAll();
-        Iterable<Part> parts = partRepo.findAll();
-        model.addAttribute("parts", parts);
-        model.addAttribute("modules", modules);
-        return "parts";
-    }
-
-    @PostMapping ("/parts")
-    public String addPart(
-            @AuthenticationPrincipal User user,
-            @RequestParam String partName,
-            @RequestParam String partDescription,
-            @RequestParam (required = false, defaultValue = "") String unitName,
-            Model model) {
-//        Part part = new Part(partName, partDescription, user, unitRepo.findByUnitName(unitName));
-//        partRepo.save(part);
-        Iterable<Part> parts = partRepo.findAll();
-        Iterable<Module> modules = moduleRepo.findAll();
-        model.addAttribute("parts", parts);
-        model.addAttribute("modules", modules);
-        return "parts";
     }
 
     @GetMapping("/main")

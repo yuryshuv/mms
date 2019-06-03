@@ -14,25 +14,37 @@
                     Добавить запчасть
                 </a>
 
-                <div class="collapse" id="collapseExample">
+                <div class="collapse <#if part??>show</#if>" id="collapseExample">
                     <div class="form-group mt-3">
                         <form method="post" enctype="multipart/form-data">
                             <div class="md-form">
-                                <input type="text" class="form-control" name="partName" id="partNameInput">
+                                <input type="text" class="form-control ${(partNameError??)?string('is-invalid','')}"
+                                       value="<#if part??>${part.partName}</#if>" name="partName" id="partNameInput">
+                                <#if partNameError??>
+                                    <div class="invalid-feedback">
+                                        ${partNameError}
+                                    </div>
+                                </#if>
                                 <label for="partNameInput">Название запчасти</label>
                             </div>
                             <div class="md-form">
-                                <input type="text" class="form-control" name="partDescription" id="partDescriptionInput">
+                                <input type="text" class="form-control ${(partDescriptionError??)?string('is-invalid','')}"
+                                       value="<#if part??>${part.partDescription}</#if>" name="partDescription" id="partDescriptionInput">
+                                <#if partDescriptionError??>
+                                    <div class="invalid-feedback">
+                                        ${partDescriptionError}
+                                    </div>
+                                </#if>
                                 <label for="partDescriptionInput">Описание запчасти</label>
                             </div>
 
-                            <select class="mdb-select md-form colorful-select dropdown-primary" name="unitName" searchable="Поиск">
+                            <select class="mdb-select md-form colorful-select dropdown-primary" name="unit" searchable="Поиск">
                                 <option value="" disabled selected>Выберите узел</option>
                                 <#list modules as module>
                                     <#if module.units?size != 0>
                                         <optgroup label=${module.moduleName}>
                                             <#list module.units as unit>
-                                                <option>${unit.unitName}</option>
+                                                <option value="${unit.unitId}">${unit.unitName}</option>
                                             </#list>
                                         </optgroup>
                                     <#else>
@@ -55,7 +67,7 @@
                 <tr>
                     <th class="col" style="width: 30%">Название</th>
                     <th class="col">Описание</th>
-                    <th class="col" style="width: 10%">Узел</th>
+                    <th class="col" style="width: 20%">Узел</th>
                     <#if isAdmin>
                         <th class="col" style="width: 10%">Редактировать</th>
                     </#if>
