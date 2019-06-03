@@ -9,6 +9,9 @@
             <a class="navbar-brand" href="/main"><strong>Система управления обслуживанием</strong></a>
             <ul class="nav navbar-nav nav-flex-icons ml-auto">
                 <li class="nav-item">
+                    <a class="nav-link" href="/main"><i class="fas fa-building"></i> <span class="clearfix d-none d-sm-inline-block">Объекты</span></a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/parts"><i class="fas fa-tools mdb-gallery-view-icon"></i> <span class="clearfix d-none d-sm-inline-block">Запчасти</span></a>
                 </li>
                 <li class="nav-item">

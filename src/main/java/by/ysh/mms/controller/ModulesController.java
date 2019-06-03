@@ -4,6 +4,7 @@ import by.ysh.mms.domain.Module;
 import by.ysh.mms.domain.Unit;
 import by.ysh.mms.domain.User;
 import by.ysh.mms.repos.UnitRepo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Controller
-public class ModuleController {
+public class ModulesController {
 
     @Autowired
     private UnitRepo unitRepo;

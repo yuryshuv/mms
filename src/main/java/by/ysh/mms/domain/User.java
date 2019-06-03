@@ -14,6 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "usr")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -21,14 +22,17 @@ public class User implements UserDetails {
     @NotBlank(message = "Введите имя пользователя")
     @Length(max = 12, message = "Слишком длинное имя (более, чем 12 символов)")
     private String username;
+
     @NotBlank(message = "Введите пароль")
     @Length(max = 50, message = "Слишком длинный пароль (более, чем 50 символов)")
     private String password;
+
     private boolean active = false;
 
     @Email (message = "Введите корректный email")
     @NotBlank(message = "Введите email")
     private String email;
+
     private String activationCode;
 
     @ElementCollection (targetClass = Role.class, fetch = FetchType.EAGER)

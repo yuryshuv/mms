@@ -1,6 +1,9 @@
 package by.ysh.mms.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Document {
@@ -8,7 +11,12 @@ public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long documentId;
+
+    @NotBlank(message = "Поле не может быть пустым")
+    @Length(max = 255, message = "Слишком длинное имя файла (более, чем 255 символов)")
     private String documentName;
+
+    @Length(max = 255, message = "Слишком длинное описание файла (более, чем 255 символов)")
     private String documentDescription;
 
     @ManyToOne(fetch = FetchType.EAGER)

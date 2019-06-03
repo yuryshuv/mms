@@ -1,20 +1,33 @@
 package by.ysh.mms.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "orders")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
+
+    @NotBlank(message = "Поле не может быть пустым")
+    @Length(max = 255, message = "Слишком длинное название (более, чем 255 символов)")
     private String orderName;
+
+    @Length(max = 255, message = "Слишком длинное описание (более, чем 255 символов)")
     private String orderDescription;
+
     private boolean isFinished = false;
+
     private String startTime;
+
     private String expectedTime;
+
     private String endTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -76,8 +89,8 @@ public class Order {
         this.author = author;
     }
 
-    public Unit getUnit() {
-        return unit;
+    public String getUnit() {
+        return unit != null ? unit.getUnitName() : "<none>";
     }
 
     public void setUnit(Unit unit) {
@@ -113,7 +126,7 @@ public class Order {
     }
 
     public String getEndTime() {
-        return endTime;
+        return endTime != null ? endTime : "<none>";
     }
 
     public void setEndTime(String endTime) {
