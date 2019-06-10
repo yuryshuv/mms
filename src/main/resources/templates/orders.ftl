@@ -92,9 +92,9 @@
                     <th class="col">Описание</th>
                     <th class="col">Узел</th>
                     <th class="col">Ответственные</th>
-                    <th class="col">Дата выдачи</th>
-                    <th class="col">Дата выполнения</th>
-                    <th class="col">Дата завершения</th>
+                    <th class="col" style="width: 10%">Дата выдачи</th>
+                    <th class="col" style="width: 10%">Дата выполнения</th>
+                    <th class="col" style="width: 10%">Дата завершения</th>
                     <th class="col" style="width: 10%"><#if isAdmin>Редактировать<#else>Завершить</#if></th>
                 </tr>
                 </thead>

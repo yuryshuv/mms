@@ -65,7 +65,7 @@ public class OrdersController {
             order.setAuthor(user);
             order.setStartTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy г. HH:mm")));
             order.setExpectedTime(expectedDate + " " + expectedTime);
-            model.addAttribute("unit", null);
+            model.addAttribute("order", null);
             orderRepo.save(order);
         }
         Iterable<Module> modules = moduleRepo.findAll();

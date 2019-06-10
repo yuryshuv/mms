@@ -28,8 +28,8 @@
                         <i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">${name}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="/user/profile">Профиль пользователя</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="/user/profile">Мой профиль</a>
+                        <a class="dropdown-item" href="#">Мои наряды</a>
                         <a class="dropdown-item"><@l.logout /></a>
                     </div>
                 </li>

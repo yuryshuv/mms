@@ -2,7 +2,7 @@
 <#include "parts/security.ftl">
 
 <@c.page>
-    <div class="card bg-light">
+    <div class="card bg-light" xmlns="http://www.w3.org/1999/html">
         <div class="card-body">
             <h2>Объекты</h2>
         </div>
@@ -16,7 +16,7 @@
 
                 <div class="collapse <#if module??>show</#if>" id="collapseExample" >
                     <div class="form-group mt-3">
-                        <form class="needs-validation" method="post" enctype="multipart/form-data">
+                        <form action="/main" class="needs-validation" method="post" enctype="multipart/form-data">
                             <div class="md-form">
                                 <input type="text" class="form-control ${(moduleNameError??)?string('is-invalid','')}"
                                        value="<#if module??>${module.moduleName}</#if>" id="moduleNameInput" name="moduleName">
@@ -38,7 +38,7 @@
                                 <label for="moduleDescriptionInput">Описание объекта</label>
                             </div>
                             <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                            <button type="submit" class="btn btn-primary">Добавить</button>
+                            <button type="submit" class="btn btn-primary" name="btn" value="add">Добавить</button>
                         </form>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
         </div>
     </#if>
     <div class="card mt-3">
-        <div class="card-body">
+        <form class="card-body">
             <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                 <tr>
@@ -64,10 +64,17 @@
                         </th>
                         <td>${module.moduleDescription}</td>
                         <#if isAdmin>
+                        <form method="post" action="/main/remove">
                             <td style="text-align: center">
-                                <a><i class="fas fa-pen-square mx-1"></i></a>
-                                <a><i class="fas fa-times mx-1"></i></a>
+                                <a href="/main/${module.moduleId}"><i class="fas fa-pen-square mx-1"></i></a>
+                                <input type="hidden" value="${module.moduleId}" name="module">
+                                <#--<input type="hidden" value="${module.moduleName}" name="moduleName">-->
+                                <#--<input type="hidden" value="${module.moduleDescription}" name="moduleDescription">-->
+                                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                <button type="submit" class="btn-sm btn-gray">Удалить<i class="fas fa-times fa-xs ml-2"></i></button>
+                                <#--<button type="submit" class="btn btn-primary" name="btn" value="delete"><i class="fas fa-times mx-1"></i></button>-->
                             </td>
+                        </form>
                         </#if>
                     </tr>
                 </#list>

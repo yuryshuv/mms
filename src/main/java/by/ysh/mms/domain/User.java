@@ -24,7 +24,6 @@ public class User implements UserDetails {
     private String username;
 
     @NotBlank(message = "Введите пароль")
-    @Length(max = 50, message = "Слишком длинный пароль (более, чем 50 символов)")
     private String password;
 
     private boolean active = false;

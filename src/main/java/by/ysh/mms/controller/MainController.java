@@ -3,14 +3,12 @@ package by.ysh.mms.controller;
 import by.ysh.mms.domain.Module;
 import by.ysh.mms.domain.User;
 import by.ysh.mms.repos.ModuleRepo;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -33,7 +31,7 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping ("/main")
+    @RequestMapping (value = "/main", method = RequestMethod.POST)
     public String add(
             @AuthenticationPrincipal User user,
             @Valid Module module,
@@ -44,19 +42,53 @@ public class MainController {
             model.mergeAttributes(errorsMap);
             model.addAttribute("module", module);
         } else {
-            Module moduleFromDb = moduleRepo.findByModuleName(module.getModuleName());
-            if (moduleFromDb != null){
-                model.addAttribute("module", module);
-                model.addAttribute("moduleNameError", "Модуль с таким именем уже существует");
-            } else {
-                module.setAuthor(user);
-                model.addAttribute("module", null);
-                moduleRepo.save(module);
+                Module moduleFromDb = moduleRepo.findByModuleName(module.getModuleName());
+                if (moduleFromDb != null){
+                    model.addAttribute("module", module);
+                    model.addAttribute("moduleNameError", "Модуль с таким именем уже существует");
+                } else {
+                    module.setAuthor(user);
+                    model.addAttribute("module", null);
+                    moduleRepo.save(module);
+                }
             }
-        }
         Iterable<Module> modules = moduleRepo.findAll();
         model.addAttribute("modules", modules);
         return "main";
     }
+
+    @RequestMapping(value = "/main/remove", method = RequestMethod.POST)
+    public String removeModule(
+            @RequestParam("module") long moduleId
+    ){
+        System.out.println("remove");
+        System.out.println(moduleId);
+        moduleRepo.deleteById(moduleId);
+        return "redirect:/main";
+    }
+
+    @GetMapping("/main/{module}")
+    public String getModule(
+            @PathVariable Module module,
+            Model model
+            ) {
+        model.addAttribute("moduleName", module.getModuleName());
+        model.addAttribute("moduleDescription", module.getModuleDescription());
+        return "moduleEdit";
+    }
+
+    @PostMapping("/main/{module}")
+    public String updateModule(
+            @PathVariable Module module,
+            @RequestParam String moduleName,
+            @RequestParam String moduleDescription,
+            Model model
+    ){
+        module.setModuleName(moduleName);
+        module.setModuleDescription(moduleDescription);
+        moduleRepo.save(module);
+        return "redirect:/main/";
+    }
+
 
 }

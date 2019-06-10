@@ -49,8 +49,10 @@ public class UserService implements UserDetailsService {
     private void sendMessage(User user) {
         if (!StringUtils.isEmpty(user.getEmail())){
             String message = String.format(
-                    "Hello, %s! \n" +
-                            "Welcome to mms. Please, visit next link: http://localhost:8080/activate/%s",
+                    "Зравствуйте, %s! \n" +
+                            "Вы зарегистрировались в систему управления обслуживанием. " +
+                            "Для завершения регистрации перейдите по следующей ссылке: " +
+                            "http://localhost:8080/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
             );
