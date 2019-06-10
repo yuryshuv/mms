@@ -19,7 +19,7 @@
 
                 <div class="collapse <#if unit??>show</#if>" id="collapseExample">
                     <div class="mt-3">
-                        <form method="post" class="needs-validation" enctype="multipart/form-data">
+                        <form action="/modules/${module.moduleId}" method="post" class="needs-validation" enctype="multipart/form-data">
                             <div class="md-form">
                                 <input type="text" class="form-control ${(unitNameError??)?string('is-invalid','')}"
                                        value="<#if unit??>${unit.unitName}</#if>" name="unitName" id="unitNameInput">
@@ -67,10 +67,15 @@
                         </th>
                         <td>${unit.unitDescription}</td>
                         <#if isAdmin>
-                            <td style="text-align: center">
-                                <a><i class="fas fa-pen-square mx-1"></i></a>
-                                <a><i class="fas fa-times mx-1"></i></a>
-                            </td>
+                            <form method="post" action="/modules/${module.moduleId}/remove">
+                                <td style="text-align: center">
+                                    <a href="/modules/${module.moduleId}/${unit.unitId}"><i class="fas fa-pen-square"></i></a>
+                                    <input type="hidden" value="${module.moduleId}" name="module">
+                                    <input type="hidden" value="${unit.unitId}" name="unit">
+                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-times"></i></button>
+                                </td>
+                            </form>
                         </#if>
                     </tr>
                 </#list>

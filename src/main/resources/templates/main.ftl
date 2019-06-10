@@ -64,21 +64,18 @@
                         </th>
                         <td>${module.moduleDescription}</td>
                         <#if isAdmin>
-                        <form method="post" action="/main/remove">
-                            <td style="text-align: center">
-                                <a href="/main/${module.moduleId}"><i class="fas fa-pen-square mx-1"></i></a>
-                                <input type="hidden" value="${module.moduleId}" name="module">
-                                <#--<input type="hidden" value="${module.moduleName}" name="moduleName">-->
-                                <#--<input type="hidden" value="${module.moduleDescription}" name="moduleDescription">-->
-                                <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                                <button type="submit" class="btn-sm btn-gray">Удалить<i class="fas fa-times fa-xs ml-2"></i></button>
-                                <#--<button type="submit" class="btn btn-primary" name="btn" value="delete"><i class="fas fa-times mx-1"></i></button>-->
-                            </td>
-                        </form>
+                            <form method="post" action="/main/remove">
+                                <td style="text-align: center">
+                                    <a href="/main/${module.moduleId}"><i class="fas fa-pen-square"></i></a>
+                                    <input type="hidden" value="${module.moduleId}" name="module">
+                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-times"></i></button>
+                                </td>
+                            </form>
                         </#if>
                     </tr>
                 </#list>
             </table>
-        </div>
+        </form>
     </div>
 </@c.page>

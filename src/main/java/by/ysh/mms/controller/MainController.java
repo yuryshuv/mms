@@ -74,7 +74,7 @@ public class MainController {
             ) {
         model.addAttribute("moduleName", module.getModuleName());
         model.addAttribute("moduleDescription", module.getModuleDescription());
-        return "moduleEdit";
+        return "module";
     }
 
     @PostMapping("/main/{module}")

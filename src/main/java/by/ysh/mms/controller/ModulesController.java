@@ -10,9 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -38,7 +36,7 @@ public class ModulesController {
     }
 
 
-    @PostMapping("/modules/{module}")
+    @RequestMapping(value = "/modules/{module}", method = RequestMethod.POST)
     public String addUnit(
             @AuthenticationPrincipal User user,
             @PathVariable Module module,
@@ -65,5 +63,39 @@ public class ModulesController {
         Iterable<Unit> units = unitRepo.findByModuleModuleId(module.getModuleId());
         model.addAttribute("units", units);
         return "modules";
+    }
+
+    @RequestMapping(value = "/modules/{module}/remove", method = RequestMethod.POST)
+    public String removeUnit(
+            @PathVariable Module module,
+            @RequestParam("unit") long unitId
+    ){
+        unitRepo.deleteById(unitId);
+        return "redirect:/modules/{module}";
+    }
+
+    @GetMapping("/modules/{module}/{unit}")
+    public String getModule(
+            @PathVariable Module module,
+            @PathVariable Unit unit,
+            Model model
+    ) {
+        model.addAttribute("unitName", unit.getUnitName());
+        model.addAttribute("unitDescription", unit.getUnitDescription());
+        return "unit";
+    }
+
+    @PostMapping("/modules/{module}/{unit}")
+    public String updateModule(
+            @PathVariable Module module,
+            @PathVariable Unit unit,
+            @RequestParam String unitName,
+            @RequestParam String unitDescription,
+            Model model
+    ){
+        unit.setUnitName(unitName);
+        unit.setUnitDescription(unitDescription);
+        unitRepo.save(unit);
+        return "redirect:/modules/{module}";
     }
 }
