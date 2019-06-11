@@ -81,4 +81,47 @@ public class UnitsController {
         model.addAttribute("parts", parts);
         return "units";
     }
+
+    @RequestMapping(value = "/units/{unit}/removeDocument", method = RequestMethod.POST)
+    public String removeDocument(
+            @PathVariable Unit unit,
+            @RequestParam("document") long documentId
+    ){
+        documentRepo.deleteById(documentId);
+        return "redirect:/units/{unit}";
+    }
+
+    @RequestMapping(value = "/units/{unit}/removePart", method = RequestMethod.POST)
+    public String removePart(
+            @PathVariable Unit unit,
+            @RequestParam("part") long partId
+    ){
+        partRepo.deleteById(partId);
+        return "redirect:/units/{unit}";
+    }
+
+//    @GetMapping("/modules/{module}/{unit}")
+//    public String getModule(
+//            @PathVariable Module module,
+//            @PathVariable Unit unit,
+//            Model model
+//    ) {
+//        model.addAttribute("unitName", unit.getUnitName());
+//        model.addAttribute("unitDescription", unit.getUnitDescription());
+//        return "unit";
+//    }
+//
+//    @PostMapping("/modules/{module}/{unit}")
+//    public String updateModule(
+//            @PathVariable Module module,
+//            @PathVariable Unit unit,
+//            @RequestParam String unitName,
+//            @RequestParam String unitDescription,
+//            Model model
+//    ){
+//        unit.setUnitName(unitName);
+//        unit.setUnitDescription(unitDescription);
+//        unitRepo.save(unit);
+//        return "redirect:/modules/{module}";
+//    }
 }

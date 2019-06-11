@@ -76,10 +76,14 @@
                                 <th scope="row">${part.partName}</th>
                                 <td>${part.partDescription}</td>
                                 <#if isAdmin>
-                                    <td style="text-align: center">
-                                        <a><i class="fas fa-pen-square mx-1"></i></a>
-                                        <a><i class="fas fa-times mx-1"></i></a>
-                                    </td>
+                                    <form method="post" action="/units/${unit.unitId}/removePart">
+                                        <td style="text-align: center">
+                                            <input type="hidden" value="${part.partId}" name="part">
+                                            <input type="hidden" value="${unit.unitId}" name="unit">
+                                            <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                            <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-times"></i></button>
+                                        </td>
+                                    </form>
                                 </#if>
                             </tr>
                         </#list>
@@ -138,11 +142,16 @@
                                 </th>
                                 <td>${document.documentDescription}</td>
                                 <#if isAdmin>
-                                    <td style="text-align: center">
-                                        <#--<a><i class="fas fa-pen-square mx-1"></i></a>-->
-                                        <a><i class="fas fa-times mx-1"></i></a>
-                                    </td>
+                                    <form method="post" action="/units/${unit.unitId}/removeDocument">
+                                        <td style="text-align: center">
+                                            <input type="hidden" value="${document.documentId}" name="document">
+                                            <input type="hidden" value="${unit.unitId}" name="unit">
+                                            <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                            <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-times"></i></button>
+                                        </td>
+                                    </form>
                                 </#if>
+
                             </tr>
                         </#list>
                     </table>
