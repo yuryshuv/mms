@@ -57,11 +57,9 @@ public class UserController {
     public String updateProfile(
             @AuthenticationPrincipal User user,
             @RequestParam String oldPassword,
-            @RequestParam String password,
-            @RequestParam String password2,
             @RequestParam String email
     ){
-        userService.updateProfile(user, oldPassword, password, password2, email);
+        userService.updateProfile(user, oldPassword, email);
         return "redirect:/user/profile";
     }
 }

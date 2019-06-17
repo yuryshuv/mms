@@ -14,14 +14,6 @@
                     <label for="Form-pass4">Введите пароль</label>
                 </div>
                 <div class="md-form">
-                    <input type="password" name="password" id="Form-pass4" class="form-control">
-                    <label for="Form-pass4">Новый пароль</label>
-                </div>
-                <div class="md-form">
-                    <input type="password" name="password2" id="Form-pass5" class="form-control">
-                    <label for="Form-pass5">Повторите новый пароль</label>
-                </div>
-                <div class="md-form">
                     <input type="text" name="email" id="Form-email4"
                            value="${email!''}" class="form-control">
                     <label for="Form-email4">Электронная почта</label>
