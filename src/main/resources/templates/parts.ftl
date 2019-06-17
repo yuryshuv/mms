@@ -16,7 +16,7 @@
 
                 <div class="collapse <#if part??>show</#if>" id="collapseExample">
                     <div class="form-group mt-3">
-                        <form method="post" enctype="multipart/form-data">
+                        <form action="/parts" method="post" enctype="multipart/form-data">
                             <div class="md-form">
                                 <input type="text" class="form-control ${(partNameError??)?string('is-invalid','')}"
                                        value="<#if part??>${part.partName}</#if>" name="partName" id="partNameInput">
@@ -79,10 +79,14 @@
                         <td>${part.partDescription}</td>
                         <td>${part.unit}</td>
                         <#if isAdmin>
+                        <form method="post" action="/parts/${part.partId}/remove">
                             <td style="text-align: center">
-                                <a><i class="fas fa-pen-square mx-1"></i></a>
-                                <a><i class="fas fa-times mx-1"></i></a>
+                                <a href="/parts/${part.partId}"><i class="fas fa-pen-square"></i></a>
+                                <input type="hidden" value="${part.partId}" name="part">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-times"></i></button>
                             </td>
+                        </form>
                         </#if>
                     </tr>
                 </#list>

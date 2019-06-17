@@ -100,28 +100,4 @@ public class UnitsController {
         return "redirect:/units/{unit}";
     }
 
-//    @GetMapping("/modules/{module}/{unit}")
-//    public String getModule(
-//            @PathVariable Module module,
-//            @PathVariable Unit unit,
-//            Model model
-//    ) {
-//        model.addAttribute("unitName", unit.getUnitName());
-//        model.addAttribute("unitDescription", unit.getUnitDescription());
-//        return "unit";
-//    }
-//
-//    @PostMapping("/modules/{module}/{unit}")
-//    public String updateModule(
-//            @PathVariable Module module,
-//            @PathVariable Unit unit,
-//            @RequestParam String unitName,
-//            @RequestParam String unitDescription,
-//            Model model
-//    ){
-//        unit.setUnitName(unitName);
-//        unit.setUnitDescription(unitDescription);
-//        unitRepo.save(unit);
-//        return "redirect:/modules/{module}";
-//    }
 }

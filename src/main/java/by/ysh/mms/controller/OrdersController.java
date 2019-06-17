@@ -51,12 +51,7 @@ public class OrdersController {
             @AuthenticationPrincipal User user,
             @Valid Order order,
             BindingResult bindingResult,
-//            @RequestParam String orderName,
-//            @RequestParam String orderDescription,
             Model model) {
-//        Order order = new Order(orderName, orderDescription,
-//                LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy г. HH:mm")),
-//                expectedDate + " " + expectedTime, user);
         if (bindingResult.hasErrors()){
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
