@@ -15,8 +15,8 @@
                 </div>
                 <#list roles as role>
                     <div class="form-check mb-3">
-                            <input type="checkbox" name="${role}" class="form-check-input" id="${role}" ${user.roles?seq_contains(role)?string("checked", "")}>
-                            <label class="custom-control-label" for="${role}">${role}</label>
+                        <input type="checkbox" name="${role}" class="form-check-input" id="${role}" ${user.roles?seq_contains(role)?string("checked", "")}>
+                        <label class="custom-control-label" for="${role}">${role}</label>
                     </div>
                 </#list>
                 <input type="hidden" value="${user.id}" name="userId">
