@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -38,32 +37,6 @@ public class PartsController {
         model.addAttribute("modules", modules);
         return "parts";
     }
-
-//    @PostMapping("/parts")
-//    public String addPart(
-//            @RequestParam (required = false) Long unitId,
-//            @AuthenticationPrincipal User user,
-//            @Valid Part part,
-//            BindingResult bindingResult,
-//            Model model) {
-//        if (bindingResult.hasErrors()){
-//            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
-//            model.mergeAttributes(errorsMap);
-//            model.addAttribute("part", part);
-//        } else {
-//            if (unitRepo.findByUnitId(unitId) != null){
-//                part.setUnit(unitRepo.findByUnitId(unitId));
-//            }
-//            part.setAuthor(user);
-//            model.addAttribute("part", null);
-//            partRepo.save(part);
-//        }
-//        Iterable<Part> parts = partRepo.findAll();
-//        Iterable<Module> modules = moduleRepo.findAll();
-//        model.addAttribute("parts", parts);
-//        model.addAttribute("modules", modules);
-//        return "parts";
-//    }
 
     @RequestMapping(value = "/parts", method = RequestMethod.POST)
     public String addPart(
@@ -109,7 +82,9 @@ public class PartsController {
         model.addAttribute("modules", modules);
         model.addAttribute("partName", part.getPartName());
         model.addAttribute("partDescription", part.getPartDescription());
-        model.addAttribute("unit", part.getUnit());
+//        if (part.getUnit() != null){
+            model.addAttribute("unit", part.getUnit());
+//        } else model.addAttribute("unit", "Выберите узел");
         return "part";
     }
 
@@ -123,7 +98,6 @@ public class PartsController {
     ){
         part.setPartName(partName);
         part.setPartDescription(partDescription);
-        System.out.println();
         part.setUnit(unit);
         partRepo.save(part);
         return "redirect:/parts";

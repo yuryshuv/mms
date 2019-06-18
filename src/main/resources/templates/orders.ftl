@@ -15,7 +15,7 @@
                 </a>
                 <div class="collapse <#if order??>show</#if>" id="collapseExample">
                     <div class="form-group mt-3">
-                        <form method="post" enctype="multipart/form-data">
+                        <form method="post" action="/orders" enctype="multipart/form-data">
                             <div class="md-form">
                                 <input type="text" class="form-control ${(orderNameError??)?string('is-invalid','')}"
                                        value="<#if order??>${order.orderName}</#if>" name="orderName" id="orderNameInput">
@@ -36,22 +36,24 @@
                                 </#if>
                                 <label for="orderDescriptionInput">Описание наряда</label>
                             </div>
-                            <select class="mdb-select md-form colorful-select dropdown-primary" searchable="Поиск">
-                                <option value="" disabled selected>Выберите узел</option>
+                            <select class="mdb-select md-form colorful-select dropdown-primary" name="unit" searchable="Поиск">
+                                <option value="" disabled selected><#if unit??>${unit}<#else>Выберите узел</#if></option>
                                 <#list modules as module>
                                     <#if module.units?size != 0>
                                         <optgroup label=${module.moduleName}>
                                             <#list module.units as unit>
-                                                <option value="">${unit.unitName}</option>
+                                                <option value="${unit.unitId}">${unit.unitName}</option>
                                             </#list>
                                         </optgroup>
+                                    <#else>
                                     </#if>
+
                                 </#list>
                             </select>
-                            <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Поиск">
+                            <select class="mdb-select md-form colorful-select dropdown-primary" name="userArray" multiple searchable="Поиск">
                                 <option value="" disabled selected>Ответственные за выполнение</option>
                                 <#list users as user>
-                                    <option value="">${user.username}</option>
+                                    <option value="${user.id}">${user.username}</option>
                                 </#list>
                             </select>
                             <div class="card mt-3">
@@ -88,13 +90,13 @@
             <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th class="col" style="width: 30%">Название</th>
-                    <th class="col">Описание</th>
-                    <th class="col">Узел</th>
-                    <th class="col">Ответственные</th>
-                    <th class="col" style="width: 10%">Дата выдачи</th>
-                    <th class="col" style="width: 10%">Дата выполнения</th>
-                    <th class="col" style="width: 10%">Дата завершения</th>
+                    <th class="col" style="width: 10%">Название</th>
+                    <th class="col" style="width: 10%">Описание</th>
+                    <th class="col" style="width: 10%">Узел</th>
+                    <th class="col" style="width: 15%">Ответственные</th>
+                    <th class="col" style="width: 15%">Дата выдачи</th>
+                    <th class="col" style="width: 15%">Дата выполнения</th>
+                    <th class="col" style="width: 15%">Дата завершения</th>
                     <th class="col" style="width: 10%"><#if isAdmin>Редактировать<#else>Завершить</#if></th>
                 </tr>
                 </thead>
@@ -105,20 +107,26 @@
                         </th>
                         <td>${order.orderDescription}</td>
                         <td>${order.getUnit()}</td>
-                        <td></td>
-                        <#--<td>${order.getEmployees()}</td>-->
+                        <td>
+                            <#list order.getEmployees() as employee>
+                                ${employee.getUsername()}
+                                <#sep>,
+                            </#list>
+                        </td>
                         <td>${order.getStartTime()}</td>
                         <td>${order.getExpectedTime()}</td>
                         <td>${order.getEndTime()}</td>
-
-                            <td style="text-align: center">
-                                <a><i class="fas fa-check"></i></a>
-                                <#if isAdmin>
-                                <a><i class="fas fa-pen-square mx-1"></i></a>
-                                <a><i class="fas fa-times mx-1"></i></a>
-                                </#if>
-                            </td>
-
+                        <td style="text-align: center">
+                            <a><i class="fas fa-check"></i></a>
+                            <#if isAdmin>
+                                <form method="post" action="/orders/${order.orderId}/remove">
+                                    <a href="/orders/${order.orderId}"><i class="fas fa-pen-square"></i></a>
+                                    <input type="hidden" value="${order.orderId}" name="order">
+                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-times"></i></button>
+                                </form>
+                            </#if>
+                        </td>
                     </tr>
                 </#list>
             </table>
