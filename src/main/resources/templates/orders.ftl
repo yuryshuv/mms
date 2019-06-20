@@ -96,7 +96,7 @@
                     <th class="col" style="width: 15%">Ответственные</th>
                     <th class="col" style="width: 15%">Дата выдачи</th>
                     <th class="col" style="width: 15%">Дата выполнения</th>
-                    <th class="col" style="width: 15%">Дата завершения</th>
+                    <th class="col" style="width: 15%">Завершен (Дата завершения)</th>
                     <th class="col" style="width: 10%"><#if isAdmin>Редактировать<#else>Завершить</#if></th>
                 </tr>
                 </thead>
@@ -111,13 +111,18 @@
                             <#list order.getEmployees() as employee>
                                 ${employee.getUsername()}
                                 <#sep>,
+                                <#else>
                             </#list>
                         </td>
                         <td>${order.getStartTime()}</td>
                         <td>${order.getExpectedTime()}</td>
                         <td>${order.getEndTime()}</td>
                         <td style="text-align: center">
-                            <a><i class="fas fa-check"></i></a>
+                            <form method="post" action="/orders/${order.orderId}/finish">
+                                <input type="hidden" value="${order.orderId}" name="order">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-check"></i></button>
+                            </form>
                             <#if isAdmin>
                                 <form method="post" action="/orders/${order.orderId}/remove">
                                     <a href="/orders/${order.orderId}"><i class="fas fa-pen-square"></i></a>

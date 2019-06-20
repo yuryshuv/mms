@@ -73,7 +73,7 @@ public class OrdersController {
         model.addAttribute("modules", modules);
         model.addAttribute("users", users);
         model.addAttribute("orders", orders);
-        return "orders";
+        return "redirect:/orders";
     }
 
     @RequestMapping(value = "/orders/{order}/remove", method = RequestMethod.POST)
@@ -100,8 +100,20 @@ public class OrdersController {
         model.addAttribute("unit", order.getUnit());
         model.addAttribute("userArray", order.getEmployees());
         model.addAttribute("expectedDate", date[0]+".");
-        model.addAttribute("expectedTime", date[1].substring(1));
+        if (date.length == 2){
+            model.addAttribute("expectedTime", date[1].substring(1));
+        }
         return "order";
+    }
+
+    @RequestMapping(value = "/orders/{order}/finish", method = RequestMethod.POST)
+    public String finishOrder(
+            @PathVariable Order order
+    ){
+        order.setFinished(true);
+        order.setEndTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy г. HH:mm")));
+        orderRepo.save(order);
+        return "redirect:/orders";
     }
 
 }

@@ -1,5 +1,6 @@
 package by.ysh.mms.controller;
 
+import by.ysh.mms.domain.Order;
 import by.ysh.mms.domain.Role;
 import by.ysh.mms.domain.User;
 import by.ysh.mms.service.UserService;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @Controller
@@ -61,5 +64,25 @@ public class UserController {
     ){
         userService.updateProfile(user, oldPassword, email);
         return "redirect:/user/profile";
+    }
+
+    @GetMapping("/{user}/orders")
+    public String getUserOrders(
+            @PathVariable
+            @AuthenticationPrincipal User user,
+            Model model
+    ){
+        model.addAttribute("orders", user.getOrders());
+        return "userOrders";
+    }
+
+    @RequestMapping(value = "/{user}/orders/{order}/finish", method = RequestMethod.POST)
+    public String finishOrder(
+            @PathVariable
+            @AuthenticationPrincipal User user,
+            @PathVariable Order order
+    ){
+        userService.finishOrder(user, order);
+        return "redirect:/userOrders";
     }
 }

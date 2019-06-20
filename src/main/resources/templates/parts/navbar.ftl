@@ -29,7 +29,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/user/profile">Мой профиль</a>
-                        <a class="dropdown-item" href="#">Мои наряды</a>
+                        <a class="dropdown-item" href="/user/${user.id}/orders">Мои наряды</a>
                         <a class="dropdown-item"><@l.logout /></a>
                     </div>
                 </li>

@@ -1,7 +1,9 @@
 package by.ysh.mms.service;
 
+import by.ysh.mms.domain.Order;
 import by.ysh.mms.domain.Role;
 import by.ysh.mms.domain.User;
+import by.ysh.mms.repos.OrderRepo;
 import by.ysh.mms.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,6 +28,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private OrderRepo orderRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -104,5 +112,11 @@ public class UserService implements UserDetailsService {
         if (isEmailChanged) {
             sendMessage(user);
         }
+    }
+
+    public void finishOrder(User user, Order order){
+        order.setFinished(true);
+        order.setEndTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy г. HH:mm")));
+        orderRepo.save(order);
     }
 }

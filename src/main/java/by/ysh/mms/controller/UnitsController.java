@@ -5,6 +5,7 @@ import by.ysh.mms.repos.DocumentRepo;
 import by.ysh.mms.repos.OrderRepo;
 import by.ysh.mms.repos.PartRepo;
 
+import by.ysh.mms.repos.UnitRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,6 +20,9 @@ import java.util.Set;
 
 @Controller
 public class UnitsController {
+
+    @Autowired
+    private UnitRepo unitRepo;
 
     @Autowired
     private OrderRepo orderRepo;
