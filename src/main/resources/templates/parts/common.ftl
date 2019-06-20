@@ -2,23 +2,23 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <title>Maintenance management system</title>
         <link rel="icon" type="image/ico" href="/static/favicon.ico" />
 
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
         <!-- Bootstrap core CSS -->
-        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
         <!-- Material Design Bootstrap -->
-        <link href="/static/css/mdb.min.css" rel="stylesheet">
+        <link href="/static/css/mdb.min.css" rel="stylesheet" />
         <!-- Your custom styles (optional) -->
-        <link href="/static/css/style.css" rel="stylesheet">
+        <link href="/static/css/style.css" rel="stylesheet" />
 
         <!-- MDBootstrap Datatables  -->
-        <link href="/static/css/addons/datatables.min.css" rel="stylesheet">
+        <link href="/static/css/addons/datatables.min.css" rel="stylesheet" />
     </head>
     <#--<body>-->
     <#include "navbar.ftl">

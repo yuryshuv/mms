@@ -19,7 +19,7 @@
                         <form action="/main" class="needs-validation" method="post" enctype="multipart/form-data">
                             <div class="md-form">
                                 <input type="text" class="form-control ${(moduleNameError??)?string('is-invalid','')}"
-                                       value="<#if module??>${module.moduleName}</#if>" id="moduleNameInput" name="moduleName">
+                                       value="<#if module??>${module.moduleName}</#if>" id="moduleNameInput" name="moduleName" />
                                 <#if moduleNameError??>
                                     <div class="invalid-feedback">
                                         ${moduleNameError}
@@ -29,7 +29,7 @@
                             </div>
                             <div class="md-form">
                                 <input type="text" class="form-control ${(moduleDescriptionError??)?string('is-invalid','')}"
-                                       value="<#if module??>${module.moduleDescription}</#if>" id="moduleDescriptionInput" name="moduleDescription" >
+                                       value="<#if module??>${module.moduleDescription}</#if>" id="moduleDescriptionInput" name="moduleDescription" />
                                 <#if moduleDescriptionError??>
                                     <div class="invalid-feedback">
                                         ${moduleDescriptionError}
@@ -58,7 +58,7 @@
                 </tr>
                 </thead>
                 <#list modules as module>
-                    <tr>
+                    <tr data-id="${module.moduleId}">
                         <th scope="row">
                             <a href="/modules/${module.moduleId}">${module.moduleName}</a>
                         </th>
@@ -67,7 +67,7 @@
                             <form method="post" action="/main/remove">
                                 <td style="text-align: center">
                                     <a href="/main/${module.moduleId}"><i class="fas fa-pen-square"></i></a>
-                                    <input type="hidden" value="${module.moduleId}" name="module">
+                                    <input type="hidden" value="${module.moduleId}" name="module" />
                                     <input type="hidden" name="_csrf" value="${_csrf.token}" />
                                     <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-times"></i></button>
                                 </td>

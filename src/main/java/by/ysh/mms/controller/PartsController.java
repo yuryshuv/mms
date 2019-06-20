@@ -80,11 +80,7 @@ public class PartsController {
     ) {
         Iterable<Module> modules = moduleRepo.findAll();
         model.addAttribute("modules", modules);
-        model.addAttribute("partName", part.getPartName());
-        model.addAttribute("partDescription", part.getPartDescription());
-//        if (part.getUnit() != null){
-            model.addAttribute("unit", part.getUnit());
-//        } else model.addAttribute("unit", "Выберите узел");
+        model.addAttribute("unit", part.getUnit());
         return "part";
     }
 
