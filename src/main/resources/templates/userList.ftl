@@ -20,7 +20,15 @@
             <tr>
                 <td>${user.username}</td>
                 <td><#list user.roles as role>${role}<#sep>, </#list></td>
-                <td style="text-align: center"><a href="/user/${user.id}"><i class="fas fa-pen-square mx-1"></i></a> </td>
+                <td style="text-align: center">
+
+                    <form method="post" action="/users/${user.id}/remove">
+                        <a href="/user/${user.id}"><i class="fas fa-pen-square mx-1"></i></a>
+                        <input type="hidden" value="${user.id}" name="user">
+                        <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                        <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-times"></i></button>
+                    </form>
+                </td>
             </tr>
         </#list>
         </tbody>

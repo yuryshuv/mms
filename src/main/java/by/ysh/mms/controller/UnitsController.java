@@ -1,11 +1,8 @@
 package by.ysh.mms.controller;
 
 import by.ysh.mms.domain.*;
-import by.ysh.mms.repos.DocumentRepo;
-import by.ysh.mms.repos.OrderRepo;
-import by.ysh.mms.repos.PartRepo;
+import by.ysh.mms.repos.*;
 
-import by.ysh.mms.repos.UnitRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +17,9 @@ import java.util.Set;
 
 @Controller
 public class UnitsController {
+
+    @Autowired
+    private UserRepo userRepo;
 
     @Autowired
     private UnitRepo unitRepo;
@@ -44,6 +44,8 @@ public class UnitsController {
         Set<Document> documents = unit.getDocuments();
         Set<Part> parts = unit.getParts();
         Set<Order> orders = unit.getOrders();
+        Iterable<User> users = userRepo.findAll();
+        model.addAttribute("users", users);
         model.addAttribute("unit", unit);
         model.addAttribute("parts", parts);
         model.addAttribute("documents", documents);
@@ -80,6 +82,8 @@ public class UnitsController {
         Iterable<Document> documents = documentRepo.findByUnitUnitId(unit.getUnitId());
         Iterable<Part> parts = partRepo.findByUnitUnitId(unit.getUnitId());
         Iterable<Order> orders = orderRepo.findByUnitUnitId(unit.getUnitId());
+        Iterable<User> users = userRepo.findAll();
+        model.addAttribute("users", users);
         model.addAttribute("orders", orders);
         model.addAttribute("documents", documents);
         model.addAttribute("parts", parts);

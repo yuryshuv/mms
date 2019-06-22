@@ -114,9 +114,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void finishOrder(User user, Order order){
-        order.setFinished(true);
-        order.setEndTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy г. HH:mm")));
-        orderRepo.save(order);
+    public void deleteUser(long userId) {
+        userRepo.deleteById(userId);
     }
 }

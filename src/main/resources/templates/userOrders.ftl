@@ -12,18 +12,26 @@
             <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+                    <th class="col" style="width: 5%">Статус</th>
                     <th class="col" style="width: 10%">Название</th>
                     <th class="col" style="width: 10%">Описание</th>
                     <th class="col" style="width: 10%">Узел</th>
-                    <th class="col" style="width: 15%">Ответственные</th>
+                    <th class="col" style="width: 10%">Ответственные</th>
                     <th class="col" style="width: 15%">Дата выдачи</th>
                     <th class="col" style="width: 15%">Дата выполнения</th>
                     <th class="col" style="width: 15%">Дата завершения</th>
-                    <th class="col" style="width: 10%"><#if isAdmin>Редактировать<#else>Завершить</#if></th>
+                    <th class="col" style="width: 15%"><#if isAdmin>Редактировать<#else>Завершить</#if></th>
                 </tr>
                 </thead>
                 <#list orders as order>
                     <tr>
+                        <td>
+                            <#if order.isFinished()>
+                                Завершен
+                            <#else>
+                                Выполняется
+                            </#if>
+                        </td>
                         <th scope="row">
                             ${order.orderName}
                         </th>
