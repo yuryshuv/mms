@@ -51,13 +51,15 @@
                         <div class="row">
                             <div class="col">
                                 <div class="md-form">
-                                    <input placeholder="" type="text" name="expectedDate" id="date-picker-example" class="form-control datepicker">
+                                    <input placeholder="" type="text" name="expectedDate"
+                                           value="${expectedDate}" id="date-picker-example" class="form-control datepicker">
                                     <label for="date-picker-example">Дата</label>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="md-form">
-                                    <input placeholder="" type="text" name="expectedTime" id="input_starttime" class="form-control timepicker">
+                                    <input placeholder="" type="text" name="expectedTime"
+                                           value="<#if expectedTime??>${expectedTime}</#if>" id="input_starttime" class="form-control timepicker">
                                     <label for="input_starttime">Время</label>
                                 </div>
                             </div>

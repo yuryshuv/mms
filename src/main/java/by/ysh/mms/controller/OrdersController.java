@@ -102,7 +102,7 @@ public class OrdersController {
         model.addAttribute("expectedDate", date[0]+".");
         if (date.length == 2){
             model.addAttribute("expectedTime", date[1].substring(1));
-        }
+        } else model.addAttribute("expectedTime", "");
         return "order";
     }
 
@@ -112,6 +112,26 @@ public class OrdersController {
     ){
         order.setFinished(true);
         order.setEndTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy г. HH:mm")));
+        orderRepo.save(order);
+        return "redirect:/orders";
+    }
+
+    @PostMapping("/orders/{order}")
+    public String updateOrder(
+            @PathVariable Order order,
+            @RequestParam String orderName,
+            @RequestParam String orderDescription,
+            @RequestParam (required = false) Unit unit,
+            @RequestParam (required = false) Set<User> userArray,
+            @RequestParam String expectedDate,
+            @RequestParam String expectedTime
+    ){
+        order.setOrderName(orderName);
+        order.setOrderDescription(orderDescription);
+        order.setUnit(unit);
+        order.setEmployees(userArray);
+        order.setStartTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy г. HH:mm")));
+        order.setExpectedTime(expectedDate + " " + expectedTime);
         orderRepo.save(order);
         return "redirect:/orders";
     }
