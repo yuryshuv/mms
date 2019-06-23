@@ -4,7 +4,15 @@
             <div class="header pt-3 <#if message == "Код активации не найден">red<#else>blue-gradient</#if>">
                 <div class="row d-flex justify-content-start">
                     <h3 class="white-text mt-3 mb-4 pb-1 mx-5">
-                        <#if message == "Код активации не найден">Ошибка<#else>Благодарим за регистрацию!</#if>
+                        <#if message == "Код активации не найден">
+                            Ошибка
+                        <#else>
+                            <#if message == "Пароль выслан на регистрационный email">
+                                Восстановление пароля
+                            <#else>
+                                Благодарим за регистрацию!
+                            </#if>
+                        </#if>
                     </h3>
                 </div>
             </div>

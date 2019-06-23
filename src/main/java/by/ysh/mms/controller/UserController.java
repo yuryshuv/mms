@@ -81,4 +81,21 @@ public class UserController {
         return "redirect:/user";
     }
 
+
+    @GetMapping("recovery")
+    public String getRecoveryPassword(){
+        return "recovery";
+    }
+
+    @RequestMapping(value = "/passwordRecovery", method = RequestMethod.POST)
+    public String recoveryPassword(
+            @RequestParam String username,
+            Model model
+    ){
+        System.out.println(username+ "  qweqwe");
+        userService.sendPassword(userService.findByUsername(username));
+        model.addAttribute("message", "Пароль выслан на регистрационный email");
+        return "activate";
+    }
+
 }

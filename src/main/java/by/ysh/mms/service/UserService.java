@@ -1,9 +1,7 @@
 package by.ysh.mms.service;
 
-import by.ysh.mms.domain.Order;
 import by.ysh.mms.domain.Role;
 import by.ysh.mms.domain.User;
-import by.ysh.mms.repos.OrderRepo;
 import by.ysh.mms.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -28,9 +24,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private OrderRepo orderRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -57,7 +50,7 @@ public class UserService implements UserDetailsService {
     private void sendMessage(User user) {
         if (!StringUtils.isEmpty(user.getEmail())){
             String message = String.format(
-                    "Зравствуйте, %s! \n" +
+                    "Здравствуйте, %s! \n" +
                             "Вы зарегистрировались в систему управления обслуживанием. " +
                             "Для завершения регистрации перейдите по следующей ссылке: " +
                             "http://localhost:8080/activate/%s",
@@ -116,5 +109,24 @@ public class UserService implements UserDetailsService {
 
     public void deleteUser(long userId) {
         userRepo.deleteById(userId);
+    }
+
+    public void sendPassword(User user) {
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String newPassword = UUID.randomUUID().toString().substring(0,8);
+            String message = String.format(
+                    "Здравствуйте, %s! \n" +
+                            "Ваш пароль для входа в систему: %s, смените после входа в систему",
+                    user.getUsername(),
+                    newPassword
+            );
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepo.save(user);
+            mailSender.send(user.getEmail(), "Восстановление пароля", message);
+        }
+    }
+
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username);
     }
 }

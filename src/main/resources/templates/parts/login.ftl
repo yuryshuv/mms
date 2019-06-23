@@ -36,7 +36,7 @@
                         <#if !isRegisterForm>
                             <p class="font-small grey-text d-flex justify-content-end">
                                 Забыли
-                                <a href="#" class="dark-grey-text font-weight-bold ml-1">
+                                <a href="/recovery" class="dark-grey-text font-weight-bold ml-1">
                                     пароль?
                                 </a>
                             </p>
