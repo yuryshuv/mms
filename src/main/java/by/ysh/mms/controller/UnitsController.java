@@ -8,21 +8,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Set;
 
 @Controller
+@SuppressWarnings("Duplicates")
 public class UnitsController {
 
     @Autowired
     private UserRepo userRepo;
-
-    @Autowired
-    private UnitRepo unitRepo;
 
     @Autowired
     private OrderRepo orderRepo;
@@ -88,6 +91,36 @@ public class UnitsController {
         model.addAttribute("documents", documents);
         model.addAttribute("parts", parts);
         return "units";
+    }
+
+    @RequestMapping(value="/units/{unit}/addOrder", method= RequestMethod.POST)
+    public String addUnit(
+            @RequestParam String expectedDate,
+            @RequestParam String expectedTime,
+            @PathVariable Unit unit,
+            @RequestParam (required = false) Set<User> userArray,
+            @AuthenticationPrincipal User user,
+            @Valid Order order,
+            BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("order", order);
+        } else {
+            order.setUnit(unit);
+            order.setAuthor(user);
+            order.setEmployees(userArray);
+            order.setStartTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMM yyyy г. HH:mm")));
+            order.setExpectedTime(expectedDate + " " + expectedTime);
+            model.addAttribute("order", null);
+            orderRepo.save(order);
+        }
+        Iterable<User> users = userRepo.findAll();
+        Iterable<Order> orders = orderRepo.findAll();
+        model.addAttribute("users", users);
+        model.addAttribute("orders", orders);
+        return "redirect:/units/{unit}";
     }
 
     @RequestMapping(value = "/units/{unit}/removeDocument", method = RequestMethod.POST)

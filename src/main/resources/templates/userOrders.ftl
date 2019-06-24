@@ -47,11 +47,13 @@
                         <td>${order.getExpectedTime()}</td>
                         <td>${order.getEndTime()}</td>
                         <td style="text-align: center">
-                            <form method="post" action="/orders/${order.orderId}/finish">
-                                <input type="hidden" value="${order.orderId}" name="order">
-                                <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                                <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-check"></i></button>
-                            </form>
+                            <#if !order.isFinished()>
+                                <form method="post" action="/orders/${order.orderId}/finish">
+                                    <input type="hidden" value="${order.orderId}" name="order">
+                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-check"></i></button>
+                                </form>
+                            </#if>
                             <#if isAdmin>
                                 <form method="post" action="/orders/${order.orderId}/remove">
                                     <a href="/orders/${order.orderId}"><i class="fas fa-pen-square"></i></a>

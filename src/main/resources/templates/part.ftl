@@ -3,7 +3,7 @@
 <@c.page>
     <div class="card bg-light" style="width: 40rem; left: 50%; margin-left: -320px;">
         <div class="card-body">
-            <h2>Запчасть: ${partName}</h2>
+            <h2>Запчасть: ${part.partName}</h2>
         </div>
     </div>
     <div class="card card-block mt-3" style="width: 40rem; left: 50%; margin-left: -320px">
@@ -11,12 +11,12 @@
             <form method="post">
                 <div class="md-form">
                     <input type="text" name="partName"
-                           value="${partName}" id="Form-pass4" class="form-control">
+                           value="${part.partName}" id="Form-pass4" class="form-control">
                     <label for="Form-pass4">Название запчасти</label>
                 </div>
                 <div class="md-form">
                     <input type="text" name="partDescription"
-                           value="${partDescription}" id="Form-pass4" class="form-control">
+                           value="${part.partDescription}" id="Form-pass4" class="form-control">
                     <label for="Form-pass4">Описание запчасти</label>
                 </div>
                 <select class="mdb-select md-form colorful-select dropdown-primary" name="unit" searchable="Поиск">

@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
+@SuppressWarnings("Duplicates")
 public class PartsController {
 
     @Autowired
@@ -80,6 +81,7 @@ public class PartsController {
     ) {
         Iterable<Module> modules = moduleRepo.findAll();
         model.addAttribute("modules", modules);
+        model.addAttribute("part", part);
         model.addAttribute("unit", part.getUnit());
         return "part";
     }

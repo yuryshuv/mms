@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Controller
+@SuppressWarnings("Duplicates")
 public class OrdersController {
 
     @Autowired

@@ -26,11 +26,6 @@
     </ul>
     <div class="tab-content card pt-5" id="myTabContentMD">
         <div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">
-            <div class="card bg-light">
-                <div class="card-body">
-                    <h2>Наряды</h2>
-                </div>
-            </div>
             <#if isAdmin>
                 <div class="card mt-3">
                     <div class="card-body">
@@ -39,7 +34,7 @@
                         </a>
                         <div class="collapse <#if order??>show</#if>" id="collapseExample">
                             <div class="form-group mt-3">
-                                <form method="post" action="/orders" enctype="multipart/form-data">
+                                <form method="post" action="/units/${unit.unitId}/addOrder" enctype="multipart/form-data">
                                     <div class="md-form">
                                         <input type="text" class="form-control ${(orderNameError??)?string('is-invalid','')}"
                                                value="<#if order??>${order.orderName}</#if>" name="orderName" id="orderNameInput">
@@ -60,20 +55,6 @@
                                         </#if>
                                         <label for="orderDescriptionInput">Описание наряда</label>
                                     </div>
-                                    <#--<select class="mdb-select md-form colorful-select dropdown-primary" name="unit" searchable="Поиск">-->
-                                        <#--<option value="" disabled selected><#if unit??>${unit}<#else>Выберите узел</#if></option>-->
-                                        <#--<#list modules as module>-->
-                                            <#--<#if module.units?size != 0>-->
-                                                <#--<optgroup label=${module.moduleName}>-->
-                                                    <#--<#list module.units as unit>-->
-                                                        <#--<option value="${unit.unitId}">${unit.unitName}</option>-->
-                                                    <#--</#list>-->
-                                                <#--</optgroup>-->
-                                            <#--<#else>-->
-                                            <#--</#if>-->
-
-                                        <#--</#list>-->
-                                    <#--</select>-->
                                     <select class="mdb-select md-form colorful-select dropdown-primary" name="userArray" multiple searchable="Поиск">
                                         <option value="" disabled selected>Ответственные за выполнение</option>
                                         <#list users as user>
@@ -117,7 +98,6 @@
                             <th class="col" style="width: 5%">Статус</th>
                             <th class="col" style="width: 10%">Название</th>
                             <th class="col" style="width: 10%">Описание</th>
-                            <#--<th class="col" style="width: 10%">Узел</th>-->
                             <th class="col" style="width: 10%">Ответственные</th>
                             <th class="col" style="width: 15%">Дата выдачи</th>
                             <th class="col" style="width: 15%">Дата выполнения</th>
@@ -138,7 +118,6 @@
                                     ${order.orderName}
                                 </th>
                                 <td>${order.orderDescription}</td>
-                                <#--<td>${order.getUnit()}</td>-->
                                 <td>
                                     <#list order.getEmployees() as employee>
                                         ${employee.getUsername()}
@@ -150,11 +129,13 @@
                                 <td>${order.getExpectedTime()}</td>
                                 <td>${order.getEndTime()}</td>
                                 <td style="text-align: center">
-                                    <form method="post" action="/orders/${order.orderId}/finish">
-                                        <input type="hidden" value="${order.orderId}" name="order">
-                                        <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                                        <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-check"></i></button>
-                                    </form>
+                                    <#if !order.isFinished()>
+                                        <form method="post" action="/orders/${order.orderId}/finish">
+                                            <input type="hidden" value="${order.orderId}" name="order">
+                                            <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                            <button type="submit" class="btn btn-flat btn-sm"><i class="fas fa-check"></i></button>
+                                        </form>
+                                    </#if>
                                     <#if isAdmin>
                                         <form method="post" action="/orders/${order.orderId}/remove">
                                             <a href="/orders/${order.orderId}"><i class="fas fa-pen-square"></i></a>
@@ -216,6 +197,7 @@
                                 <#if isAdmin>
                                     <form method="post" action="/units/${unit.unitId}/removePart">
                                         <td style="text-align: center">
+                                            <a href="/parts/${part.partId}"><i class="fas fa-pen-square"></i></a>
                                             <input type="hidden" value="${part.partId}" name="part">
                                             <input type="hidden" value="${unit.unitId}" name="unit">
                                             <input type="hidden" name="_csrf" value="${_csrf.token}" />
