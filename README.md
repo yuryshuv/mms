@@ -1,2 +1,2 @@
 # Maintenance management system
-Study project (SpringBoot + PostgreSQL + Freemarker)
+Study project (Maven, SpringBoot, PostgreSQL, FlyWay, Freemarker)
